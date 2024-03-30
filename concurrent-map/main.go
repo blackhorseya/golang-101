@@ -6,7 +6,7 @@ import (
 
 // AccessCounter is a struct that holds the access counter.
 type AccessCounter struct {
-	sync.Mutex
+	sync.RWMutex
 	visits map[string]int
 }
 
@@ -27,8 +27,8 @@ func (c *AccessCounter) Visit(username string) {
 
 // GetVisit is a method that returns the access counter for the given username.
 func (c *AccessCounter) GetVisit(username string) int {
-	c.Lock()
-	defer c.Unlock()
+	c.RLock()
+	defer c.RUnlock()
 
 	return c.visits[username]
 }
