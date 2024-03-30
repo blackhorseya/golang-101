@@ -34,17 +34,15 @@ func producer(ch chan<- time.Time) {
 	ticker := time.NewTicker(interval)
 
 	for {
-		select {
-		case t := <-ticker.C:
-			ch <- t
-			log.Println("produce a new job")
-		}
+		t := <-ticker.C
+		ch <- t
+		log.Println("produce a new job")
 	}
 }
 
 func consumer(ch <-chan time.Time) {
 	for t := range ch {
 		log.Println("receive a job", t)
-		time.Sleep(time.Duration(rand.Intn(5)) * time.Second)
+		time.Sleep(time.Duration(rand.Intn(5)) * time.Second) //nolint:gosec // simulate the job processing
 	}
 }

@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	interval = 3 * time.Second
+	interval = 1 * time.Second
 )
 
 func main() {
@@ -33,11 +33,9 @@ func producer(ch chan<- string) {
 	ticker := time.NewTicker(interval)
 
 	for {
-		select {
-		case <-ticker.C:
-			ch <- "ping"
-			log.Println("send ping")
-		}
+		<-ticker.C
+		ch <- "ping"
+		log.Println("send ping")
 	}
 }
 
