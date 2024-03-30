@@ -2,10 +2,15 @@ package main
 
 import (
 	"log"
+	"math/rand"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+)
+
+const (
+	interval = 1 * time.Second
 )
 
 func main() {
@@ -26,9 +31,20 @@ func main() {
 }
 
 func producer(ch chan<- time.Time) {
-	// todo: 2024/3/30|sean|implement producer
+	ticker := time.NewTicker(interval)
+
+	for {
+		select {
+		case t := <-ticker.C:
+			ch <- t
+			log.Println("produce a new job")
+		}
+	}
 }
 
 func consumer(ch <-chan time.Time) {
-	// todo: 2024/3/30|sean|implement consumer
+	for t := range ch {
+		log.Println("receive a job", t)
+		time.Sleep(time.Duration(rand.Intn(5)) * time.Second)
+	}
 }
