@@ -1,7 +1,12 @@
 package main
 
+import (
+	"sync"
+)
+
 // AccessCounter is a struct that holds the access counter.
 type AccessCounter struct {
+	sync.Mutex
 	visits map[string]int
 }
 
@@ -14,14 +19,18 @@ func NewAccessCounter() *AccessCounter {
 
 // Visit is a method that increments the access counter for the given username.
 func (c *AccessCounter) Visit(username string) {
-	// todo: 2024/3/30|sean|Implement the Visit method
-	panic("implement me")
+	c.Lock()
+	defer c.Unlock()
+
+	c.visits[username]++
 }
 
 // GetVisit is a method that returns the access counter for the given username.
 func (c *AccessCounter) GetVisit(username string) int {
-	// todo: 2024/3/30|sean|Implement the GetVisit method
-	panic("implement me")
+	c.Lock()
+	defer c.Unlock()
+
+	return c.visits[username]
 }
 
 func main() {
