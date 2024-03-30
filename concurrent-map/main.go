@@ -32,3 +32,6 @@ func (c *AccessCounter) GetVisit(username string) int {
 
 	return c.visits[username]
 }
+
+func main() {
+}
