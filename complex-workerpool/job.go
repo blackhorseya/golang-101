@@ -8,6 +8,9 @@ import (
 
 // Job is an interface that represents a job.
 type Job interface {
+	// GetID returns the job ID.
+	GetID() int
+
 	// Execute runs the task.
 	Execute(workerID int) error
 
@@ -23,6 +26,10 @@ type simpleJob struct {
 
 func NewSimpleJob(id int) Job {
 	return &simpleJob{id: id}
+}
+
+func (j *simpleJob) GetID() int {
+	return j.id
 }
 
 func (j *simpleJob) Execute(workerID int) error {

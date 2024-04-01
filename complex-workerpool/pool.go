@@ -73,6 +73,8 @@ func (wp *workerPool) SubmitJob(job Job) {
 		log.Println("worker pool is stopped, cannot submit job")
 		return
 	default:
+		log.Printf("submitting job %d\n", job.GetID())
 		wp.jobsQueue <- job
+		log.Printf("job %d is submitted\n", job.GetID())
 	}
 }
