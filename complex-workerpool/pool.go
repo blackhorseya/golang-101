@@ -4,6 +4,8 @@ import (
 	"sync"
 )
 
+var _ Pool = (*workerPool)(nil)
+
 // Pool represents a pool of workers.
 type Pool interface {
 	// Start starts the pool.
@@ -16,11 +18,30 @@ type Pool interface {
 	SubmitJob(job Job)
 }
 
-// WorkerPool is a struct that represents a worker pool.
-type WorkerPool struct {
-	workers []*Worker
-	jobs    []Job
-	start   sync.Once
-	stop    sync.Once
-	quit    chan struct{}
+type workerPool struct {
+	workers   []*Worker
+	jobs      []Job
+	jobsQueue chan Job
+	start     sync.Once
+	stop      sync.Once
+	quit      chan struct{}
+}
+
+// NewWorkerPool creates a new worker pool.
+func NewWorkerPool(cap int) Pool {
+	panic("implement me")
+}
+
+func (wp *workerPool) Start() {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (wp *workerPool) Stop() {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (wp *workerPool) SubmitJob(job Job) {
+	wp.jobs = append(wp.jobs, job)
 }
