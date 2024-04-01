@@ -1,7 +1,7 @@
 package main
 
-// Task is an interface that all tasks must implement.
-type Task interface {
+// Job is an interface that represents a job.
+type Job interface {
 	// Execute runs the task.
 	Execute() error
 
