@@ -6,3 +6,15 @@ help: ## show help
 .PHONY: lint
 lint: ## run golangci-lint
 	@golangci-lint run ./...
+
+.PHONY: gazelle
+gazelle: ## run gazelle with bazel
+	@bazel run //:gazelle
+
+.PHONY: build
+build: ## build go binary
+	@bazel build //...
+
+.PHONY: test
+test: ## test go binary
+	@bazel test //...
