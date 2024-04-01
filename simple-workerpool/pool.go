@@ -1,4 +1,4 @@
-package simple_workerpool
+package simpleworkerpool
 
 // Pool represents a worker pool.
 type Pool struct {
@@ -7,9 +7,9 @@ type Pool struct {
 }
 
 // NewPool creates a new worker pool with the given capacity.
-func NewPool(cap int) *Pool {
+func NewPool(workerNums int) *Pool {
 	return &Pool{
-		workerNums: cap,
+		workerNums: workerNums,
 		jobsCh:     make(chan *Job),
 	}
 }

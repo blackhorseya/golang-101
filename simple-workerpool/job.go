@@ -1,4 +1,4 @@
-package simple_workerpool
+package simpleworkerpool
 
 import (
 	"fmt"
@@ -15,5 +15,5 @@ func NewJob(id int) *Job {
 }
 
 func (x *Job) Execute() {
-	fmt.Printf("Job %d is running\n", x.ID)
+	fmt.Printf("Job %d is running\n", x.ID) //nolint:forbidigo // This is just an example
 }
