@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"math/rand"
+	"time"
 )
 
 // Job is an interface that represents a job.
@@ -25,6 +27,8 @@ func NewSimpleJob(id int) Job {
 
 func (j *simpleJob) Execute(workerID int) error {
 	log.Printf("worker %d is executing job %d", workerID, j.id)
+	time.Sleep(time.Duration(rand.Intn(5)) * time.Second) //nolint:gosec // simulate the job processing
+	log.Printf("worker %d finished job %d", workerID, j.id)
 	return nil
 }
 
