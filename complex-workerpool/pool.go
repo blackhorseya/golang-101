@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"sync"
 )
@@ -21,7 +22,6 @@ type Pool interface {
 
 type workerPool struct {
 	workers   []*Worker
-	jobs      []Job
 	jobsQueue chan Job
 	start     sync.Once
 	stop      sync.Once
@@ -29,8 +29,26 @@ type workerPool struct {
 }
 
 // NewWorkerPool creates a new worker pool.
-func NewWorkerPool(workerNums int) Pool {
-	panic("implement me")
+func NewWorkerPool(workerNums int) (Pool, error) {
+	if workerNums <= 0 {
+		return nil, errors.New("workerNums must be greater than 0")
+	}
+
+	workers := make([]*Worker, workerNums)
+	jobsQueue := make(chan Job)
+	quit := make(chan struct{})
+
+	for i := 0; i < workerNums; i++ {
+		workers[i] = NewWorker(i, jobsQueue)
+	}
+
+	return &workerPool{
+		workers:   workers,
+		jobsQueue: jobsQueue,
+		start:     sync.Once{},
+		stop:      sync.Once{},
+		quit:      quit,
+	}, nil
 }
 
 func (wp *workerPool) Start() {
@@ -50,5 +68,11 @@ func (wp *workerPool) Stop() {
 }
 
 func (wp *workerPool) SubmitJob(job Job) {
-	wp.jobs = append(wp.jobs, job)
+	select {
+	case <-wp.quit:
+		log.Println("worker pool is stopped, cannot submit job")
+		return
+	default:
+		wp.jobsQueue <- job
+	}
 }
