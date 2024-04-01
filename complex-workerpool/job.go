@@ -19,6 +19,10 @@ type simpleJob struct {
 	id int
 }
 
+func NewSimpleJob(id int) Job {
+	return &simpleJob{id: id}
+}
+
 func (j *simpleJob) Execute(workerID int) error {
 	log.Printf("worker %d is executing job %d", workerID, j.id)
 	return nil
