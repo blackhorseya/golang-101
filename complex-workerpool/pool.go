@@ -1,9 +1,5 @@
 package main
 
-import (
-	"sync"
-)
-
 var _ Pool = (*workerPool)(nil)
 
 // Pool represents a pool of workers.
@@ -22,8 +18,6 @@ type workerPool struct {
 	workers   []*Worker
 	jobs      []Job
 	jobsQueue chan Job
-	start     sync.Once
-	stop      sync.Once
 	quit      chan struct{}
 }
 
