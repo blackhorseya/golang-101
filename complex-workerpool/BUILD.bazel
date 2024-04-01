@@ -3,9 +3,9 @@ load("@rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "complex-workerpool_lib",
     srcs = [
-        "job.go",
         "main.go",
         "pool.go",
+        "task.go",
         "woker.go",
     ],
     importpath = "github.com/blackhorseya/golang-101/complex-workerpool",
