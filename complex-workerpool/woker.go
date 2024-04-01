@@ -8,10 +8,12 @@ type Worker struct {
 
 // Run is a method that runs the worker.
 func (w *Worker) Run() {
-	for job := range w.jobQueue {
-		err := job.Execute()
-		if err != nil {
-			job.OnFailure(err)
+	go func() {
+		for job := range w.jobQueue {
+			err := job.Execute()
+			if err != nil {
+				job.OnFailure(err)
+			}
 		}
-	}
+	}()
 }
