@@ -17,6 +17,6 @@ func NewJob(id int) *Job {
 }
 
 // Execute runs the job.
-func (j *Job) Execute() {
-	log.Printf("Job %d is running\n", j.ID)
+func (j *Job) Execute(workerID int) {
+	log.Printf("Worker %d is running job %d\n", workerID, j.ID)
 }

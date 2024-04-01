@@ -7,9 +7,18 @@ type Worker struct {
 }
 
 // NewWorker creates a new worker with the given id.
-func NewWorker(id int) *Worker {
+func NewWorker(id int, jobQueue chan *Job) *Worker {
 	return &Worker{
 		ID:       id,
-		jobQueue: make(chan *Job),
+		jobQueue: jobQueue,
 	}
+}
+
+// Run starts the worker.
+func (w *Worker) Run() {
+	go func() {
+		for job := range w.jobQueue {
+			job.Execute(w.ID)
+		}
+	}()
 }
