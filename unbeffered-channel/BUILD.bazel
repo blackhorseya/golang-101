@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "unbeffered-channel_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/blackhorseya/golang-101/unbeffered-channel",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "unbeffered-channel",
+    embed = [":unbeffered-channel_lib"],
+    visibility = ["//visibility:public"],
+)
