@@ -1,8 +1,14 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "job-queue",
     srcs = ["job.go"],
     importpath = "github.com/blackhorseya/golang-101/job-queue",
     visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "job-queue_test",
+    srcs = ["job_test.go"],
+    embed = [":job-queue"],
 )
