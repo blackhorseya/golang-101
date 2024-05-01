@@ -12,16 +12,21 @@ type Job interface {
 
 // JobQueue represents a queue of jobs that processes jobs in a sequential order.
 type JobQueue struct {
-	jobs chan Job
-	wg   sync.WaitGroup
-	quit chan bool
+	jobs   chan Job
+	wg     sync.WaitGroup
+	quit   chan struct{}
+	closed bool
+	mu     sync.Mutex
 }
 
 // NewJobQueue creates a new job queue.
 func NewJobQueue(size int) *JobQueue {
 	jq := &JobQueue{
-		jobs: make(chan Job, size),
-		quit: make(chan bool),
+		jobs:   make(chan Job, size),
+		wg:     sync.WaitGroup{},
+		quit:   make(chan struct{}),
+		closed: false,
+		mu:     sync.Mutex{},
 	}
 
 	jq.wg.Add(1)
@@ -32,6 +37,14 @@ func NewJobQueue(size int) *JobQueue {
 
 // Enqueue adds a job to the queue.
 func (jq *JobQueue) Enqueue(job Job) {
+	jq.mu.Lock()
+	defer jq.mu.Unlock()
+
+	if jq.closed {
+		log.Println("Attempt to enqueue on closed queue")
+		return
+	}
+
 	select {
 	case jq.jobs <- job:
 		// Job enqueued successfully
@@ -57,7 +70,12 @@ func (jq *JobQueue) worker() {
 
 // Close waits for the worker to finish and closes the job queue.
 func (jq *JobQueue) Close() {
-	close(jq.quit)
-	jq.wg.Wait()
-	close(jq.jobs)
+	jq.mu.Lock()
+	if !jq.closed {
+		jq.closed = true
+		close(jq.quit)
+		jq.wg.Wait()
+		close(jq.jobs)
+	}
+	jq.mu.Unlock()
 }
