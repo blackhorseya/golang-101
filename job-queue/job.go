@@ -18,8 +18,31 @@ type JobQueue struct {
 
 // NewJobQueue creates a new job queue with the given capacity.
 func NewJobQueue(size int) *JobQueue {
-	return &JobQueue{
+	jq := &JobQueue{
 		jobs: make(chan Job, size),
 		quit: make(chan struct{}),
+	}
+
+	jq.wg.Add(1)
+	go jq.worker()
+
+	return jq
+}
+
+// AddJob adds a job to the job queue.
+func (jq *JobQueue) AddJob(job Job) {
+	jq.jobs <- job
+}
+
+func (jq *JobQueue) worker() {
+	defer jq.wg.Done()
+
+	for {
+		select {
+		case job := <-jq.jobs:
+			_ = job.Execute()
+		case <-jq.quit:
+			return
+		}
 	}
 }
