@@ -16,7 +16,7 @@ func (j *ExampleJob) Execute() {
 }
 
 func TestNewJobQueue(t *testing.T) {
-	jq := NewJobQueue(10)
+	jq := NewJobQueue()
 	if jq == nil {
 		t.Error("expected job queue to be created")
 	}

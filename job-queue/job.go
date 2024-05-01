@@ -17,9 +17,9 @@ type JobQueue struct {
 }
 
 // NewJobQueue creates a new job queue.
-func NewJobQueue(size int) *JobQueue {
+func NewJobQueue() *JobQueue {
 	jq := &JobQueue{
-		jobs: make(chan Job, size),
+		jobs: make(chan Job),
 		quit: make(chan bool),
 	}
 
