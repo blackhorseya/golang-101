@@ -4,23 +4,23 @@ import (
 	"sync"
 )
 
-// Job is an interface that represents a job that can be executed by a worker.
+// Job is an interface for submitting work to the job queue.
 type Job interface {
-	Execute() error
+	Execute()
 }
 
-// JobQueue is a struct that represents a job queue.
+// JobQueue represents a queue of jobs that processes jobs in a sequential order.
 type JobQueue struct {
 	jobs chan Job
 	wg   sync.WaitGroup
-	quit chan struct{}
+	quit chan bool
 }
 
-// NewJobQueue creates a new job queue with the given capacity.
+// NewJobQueue creates a new job queue.
 func NewJobQueue(size int) *JobQueue {
 	jq := &JobQueue{
 		jobs: make(chan Job, size),
-		quit: make(chan struct{}),
+		quit: make(chan bool),
 	}
 
 	jq.wg.Add(1)
@@ -29,20 +29,28 @@ func NewJobQueue(size int) *JobQueue {
 	return jq
 }
 
-// AddJob adds a job to the job queue.
-func (jq *JobQueue) AddJob(job Job) {
+// Enqueue adds a job to the queue.
+func (jq *JobQueue) Enqueue(job Job) {
 	jq.jobs <- job
 }
 
+// worker runs in a goroutine and processes jobs in the order they are received.
 func (jq *JobQueue) worker() {
 	defer jq.wg.Done()
 
 	for {
 		select {
 		case job := <-jq.jobs:
-			_ = job.Execute()
+			job.Execute()
 		case <-jq.quit:
 			return
 		}
 	}
+}
+
+// Close waits for the worker to finish and closes the job queue.
+func (jq *JobQueue) Close() {
+	close(jq.quit)
+	jq.wg.Wait()
+	close(jq.jobs)
 }
