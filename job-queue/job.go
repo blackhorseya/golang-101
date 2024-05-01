@@ -1,6 +1,7 @@
 package jobqueue
 
 import (
+	"log"
 	"sync"
 )
 
@@ -17,9 +18,9 @@ type JobQueue struct {
 }
 
 // NewJobQueue creates a new job queue.
-func NewJobQueue() *JobQueue {
+func NewJobQueue(size int) *JobQueue {
 	jq := &JobQueue{
-		jobs: make(chan Job),
+		jobs: make(chan Job, size),
 		quit: make(chan bool),
 	}
 
@@ -31,7 +32,13 @@ func NewJobQueue() *JobQueue {
 
 // Enqueue adds a job to the queue.
 func (jq *JobQueue) Enqueue(job Job) {
-	jq.jobs <- job
+	select {
+	case jq.jobs <- job:
+		// Job enqueued successfully
+	default:
+		// Handle full queue, e.g., log, metrics, or alternative storage
+		log.Println("Queue is full. Job rejected.")
+	}
 }
 
 // worker runs in a goroutine and processes jobs in the order they are received.
