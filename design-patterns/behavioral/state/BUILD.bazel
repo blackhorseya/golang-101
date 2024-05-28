@@ -1,0 +1,18 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "state",
+    srcs = [
+        "concrete_state.go",
+        "context.go",
+        "state.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/state",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "state_test",
+    srcs = ["state_test.go"],
+    embed = [":state"],
+)
