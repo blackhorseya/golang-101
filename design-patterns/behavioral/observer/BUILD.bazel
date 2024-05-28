@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "observer",
+    srcs = ["observer.go"],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/observer",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "observer_test",
+    srcs = ["observer_test.go"],
+    embed = [":observer"],
+)
