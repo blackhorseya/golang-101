@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "composite",
+    srcs = ["composite.go"],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/structural/composite",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "composite_test",
+    srcs = ["composite_test.go"],
+    embed = [":composite"],
+)
