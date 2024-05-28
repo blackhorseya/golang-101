@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "chainOfResponsibility",
+    srcs = [
+        "concrete_handler.go",
+        "handler.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/chainOfResponsibility",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "chainOfResponsibility_test",
+    srcs = ["chain_test.go"],
+    embed = [":chainOfResponsibility"],
+)
