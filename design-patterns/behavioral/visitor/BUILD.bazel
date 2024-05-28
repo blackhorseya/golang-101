@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "visitor",
+    srcs = [
+        "concrete_element.go",
+        "concrete_visitor.go",
+        "element.go",
+        "visitor.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/visitor",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "visitor_test",
+    srcs = ["visitor_test.go"],
+    embed = [":visitor"],
+)
