@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "facade",
+    srcs = ["facade.go"],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/structural/facade",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "facade_test",
+    srcs = ["facade_test.go"],
+    embed = [":facade"],
+)
