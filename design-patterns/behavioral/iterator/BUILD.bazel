@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "iterator",
+    srcs = [
+        "aggregate.go",
+        "concrete_aggregate.go",
+        "concrete_iterator.go",
+        "iterator.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/iterator",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "iterator_test",
+    srcs = ["iterator_test.go"],
+    embed = [":iterator"],
+)
