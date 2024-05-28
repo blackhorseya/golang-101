@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "mediator",
+    srcs = [
+        "colleague.go",
+        "concrete_colleague.go",
+        "concrete_mediator.go",
+        "mediator.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/mediator",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "mediator_test",
+    srcs = ["mediator_test.go"],
+    embed = [":mediator"],
+)
