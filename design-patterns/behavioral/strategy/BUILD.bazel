@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "strategy",
+    srcs = ["strategy.go"],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/strategy",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "strategy_test",
+    srcs = ["strategy_test.go"],
+    embed = [":strategy"],
+)
