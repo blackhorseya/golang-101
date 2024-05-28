@@ -1,14 +1,14 @@
 load("@rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "04-builder",
+    name = "builder",
     srcs = ["builder.go"],
-    importpath = "github.com/blackhorseya/golang-101/design-patterns/04-builder",
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/creational/builder",
     visibility = ["//visibility:public"],
 )
 
 go_test(
-    name = "04-builder_test",
+    name = "builder_test",
     srcs = ["builder_test.go"],
-    embed = [":04-builder"],
+    embed = [":builder"],
 )
