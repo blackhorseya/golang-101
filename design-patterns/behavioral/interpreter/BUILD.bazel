@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "interpreter",
+    srcs = [
+        "abstract_expression.go",
+        "interpreter.go",
+        "nonterminal_expression.go",
+        "terminal_expression.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/interpreter",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "interpreter_test",
+    srcs = ["interpreter_test.go"],
+    embed = [":interpreter"],
+)
