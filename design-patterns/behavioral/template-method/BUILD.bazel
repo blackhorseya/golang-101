@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "template-method",
+    srcs = [
+        "abstract.go",
+        "concrete.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/template-method",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "template-method_test",
+    srcs = ["templatemethod_test.go"],
+    embed = [":template-method"],
+)
