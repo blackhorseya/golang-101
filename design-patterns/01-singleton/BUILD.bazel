@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "01-singleton",
+    srcs = ["singleton.go"],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/01-singleton",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "01-singleton_test",
+    srcs = ["singleton_test.go"],
+    embed = [":01-singleton"],
+)
