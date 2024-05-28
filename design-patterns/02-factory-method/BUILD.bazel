@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "02-factory-method",
+    srcs = [
+        "factory.go",
+        "shapes.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/02-factory-method",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "02-factory-method_test",
+    srcs = ["factory_test.go"],
+    embed = [":02-factory-method"],
+)
