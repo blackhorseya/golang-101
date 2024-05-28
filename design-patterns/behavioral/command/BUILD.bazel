@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "command",
+    srcs = [
+        "command.go",
+        "concrete_command.go",
+        "invoker.go",
+        "receiver.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/command",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "command_test",
+    srcs = ["command_test.go"],
+    embed = [":command"],
+)
