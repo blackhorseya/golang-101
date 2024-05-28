@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "decorator",
+    srcs = ["decorator.go"],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/structural/decorator",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "decorator_test",
+    srcs = ["decorator_test.go"],
+    embed = [":decorator"],
+)
