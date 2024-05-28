@@ -1,0 +1,18 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "memento",
+    srcs = [
+        "caretaker.go",
+        "memento.go",
+        "originator.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/behavioral/memento",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "memento_test",
+    srcs = ["memento_test.go"],
+    embed = [":memento"],
+)
