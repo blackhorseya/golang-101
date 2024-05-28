@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "prototype",
+    srcs = ["prototype.go"],
+    importpath = "github.com/blackhorseya/golang-101/design-patterns/creational/prototype",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "prototype_test",
+    srcs = ["prototype_test.go"],
+    embed = [":prototype"],
+)
