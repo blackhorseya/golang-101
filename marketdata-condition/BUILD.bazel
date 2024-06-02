@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "marketdata-condition_lib",
+    srcs = [
+        "expression.go",
+        "main.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/marketdata-condition",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "marketdata-condition",
+    embed = [":marketdata-condition_lib"],
+    visibility = ["//visibility:public"],
+)
