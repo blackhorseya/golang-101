@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "task-process_lib",
+    srcs = [
+        "main.go",
+        "step.go",
+    ],
+    importpath = "github.com/blackhorseya/golang-101/task-process",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "task-process",
+    embed = [":task-process_lib"],
+    visibility = ["//visibility:public"],
+)
