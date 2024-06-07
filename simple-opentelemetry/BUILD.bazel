@@ -1,0 +1,21 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "simple-opentelemetry_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/blackhorseya/golang-101/simple-opentelemetry",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@io_opentelemetry_go_otel//:otel",
+        "@io_opentelemetry_go_otel//semconv/v1.4.0:v1_4_0",
+        "@io_opentelemetry_go_otel_exporters_stdout_stdouttrace//:stdouttrace",
+        "@io_opentelemetry_go_otel_sdk//resource",
+        "@io_opentelemetry_go_otel_sdk//trace",
+    ],
+)
+
+go_binary(
+    name = "simple-opentelemetry",
+    embed = [":simple-opentelemetry_lib"],
+    visibility = ["//visibility:public"],
+)
