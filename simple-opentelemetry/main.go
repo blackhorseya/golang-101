@@ -8,11 +8,34 @@ import (
 	"time"
 
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 )
+
+func initJaeger() func() {
+	// Create the Jaeger exporter
+	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint())
+	if err != nil {
+		panic(err)
+	}
+
+	// Create the Jaeger trace provider
+	tracer := trace.NewTracerProvider(
+		trace.WithBatcher(exporter),
+		trace.WithResource(resource.NewWithAttributes(
+			semconv.SchemaURL,
+			semconv.ServiceNameKey.String("simple-opentelemetry"),
+		)),
+	)
+	otel.SetTracerProvider(tracer)
+
+	return func() {
+		_ = tracer.Shutdown(context.Background())
+	}
+}
 
 func initTracer() func() {
 	exporter, err := stdouttrace.New(stdouttrace.WithPrettyPrint())
@@ -35,7 +58,7 @@ func initTracer() func() {
 }
 
 func main() {
-	cleanup := initTracer()
+	cleanup := initJaeger()
 	defer cleanup()
 
 	tracer := otel.Tracer("simple-opentelemetry")

@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "f0ab4ffa5654eb9d56f83982a5d6981bd549b4b0b1b5a822159bcbeae543d2d6",
+  "moduleFileHash": "4da98b4a6396c18f60b24ed9d740aecdd2c9034f7cfcb6e8867e9f510044522f",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -35,6 +35,7 @@
           },
           "imports": {
             "io_opentelemetry_go_otel": "io_opentelemetry_go_otel",
+            "io_opentelemetry_go_otel_exporters_jaeger": "io_opentelemetry_go_otel_exporters_jaeger",
             "io_opentelemetry_go_otel_exporters_stdout_stdouttrace": "io_opentelemetry_go_otel_exporters_stdout_stdouttrace",
             "io_opentelemetry_go_otel_sdk": "io_opentelemetry_go_otel_sdk"
           },
@@ -1488,10 +1489,10 @@
       "general": {
         "bzlTransitiveDigest": "sH0ZfrlZyTTSTIpGNBfQJlEWK7fgxR4W5O3QYxF2pqQ=",
         "recordedFileInputs": {
-          "@@//go.mod": "00ef924147ff4a68211d0504c92324d7050ee38fec73f48f91396db62f238e8a",
+          "@@//go.mod": "e6f18345108f6ee103cd23324671dda0962dd8927190d93d898a897671c9e235",
           "@@rules_go~//go.mod": "de22304b720f7f61350ec1c9739de6c0a1b1103fd22bfeb6e92c6c843ddc6d6e",
           "@@gazelle~//go.sum": "7c4460e8ecb5dd8691a51d4fa2e9e4751108b933636497ce46db499fc2e7a88d",
-          "@@//go.sum": "2b52f85b0c0568293a876c3b4ae4b6cb5d5c4fbed3fea11d7414f439bee8906a",
+          "@@//go.sum": "cf30a4a1f4f8ae4801ede0c65eb27461de50993926116751cf5edea88b26e77c",
           "@@rules_go~//go.sum": "d56fdb19b21a5f12bcf625c49432371ac39c2def0f564098fbda107f7c080f40",
           "@@gazelle~//go.mod": "48dc6e771c3028ee1c18b9ffc81e596fd5f6d7e0016c5ef280e30f2821f60473"
         },
@@ -1586,6 +1587,21 @@
               "sum": "h1:hvj3vdEKyeCi4YaYfNjv2NUje8FqKqUY8IlF0FxV/ik=",
               "replace": "",
               "version": "v1.27.0"
+            }
+          },
+          "io_opentelemetry_go_otel_exporters_jaeger": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "go.opentelemetry.io/otel/exporters/jaeger",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:D7UpUy2Xc2wsi1Ras6V40q806WM07rqoCWzXu7Sqy+4=",
+              "replace": "",
+              "version": "v1.17.0"
             }
           },
           "org_golang_x_tools": {
@@ -1868,6 +1884,7 @@
             "attributes": {
               "importpaths": {
                 "io_opentelemetry_go_otel": "go.opentelemetry.io/otel",
+                "io_opentelemetry_go_otel_exporters_jaeger": "go.opentelemetry.io/otel/exporters/jaeger",
                 "io_opentelemetry_go_otel_exporters_stdout_stdouttrace": "go.opentelemetry.io/otel/exporters/stdout/stdouttrace",
                 "io_opentelemetry_go_otel_sdk": "go.opentelemetry.io/otel/sdk",
                 "com_github_go_logr_logr": "github.com/go-logr/logr",
@@ -1937,6 +1954,7 @@
         "moduleExtensionMetadata": {
           "explicitRootModuleDirectDeps": [
             "io_opentelemetry_go_otel",
+            "io_opentelemetry_go_otel_exporters_jaeger",
             "io_opentelemetry_go_otel_exporters_stdout_stdouttrace",
             "io_opentelemetry_go_otel_sdk"
           ],

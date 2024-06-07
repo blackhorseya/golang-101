@@ -4,6 +4,7 @@ go 1.22.1
 
 require (
 	go.opentelemetry.io/otel v1.27.0
+	go.opentelemetry.io/otel/exporters/jaeger v1.17.0
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.27.0
 	go.opentelemetry.io/otel/sdk v1.27.0
 )
