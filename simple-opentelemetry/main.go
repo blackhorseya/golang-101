@@ -5,36 +5,54 @@ import (
 	"crypto/rand"
 	"encoding/binary"
 	"fmt"
+	"log"
+	"os"
+	"os/signal"
 	"time"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
+	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
-func initJaeger() func() {
-	// Create the Jaeger exporter
-	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint())
+var serviceName = semconv.ServiceNameKey.String("simple-opentelemetry")
+
+func initConn() (*grpc.ClientConn, error) {
+	conn, err := grpc.NewClient("localhost:4317", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("failed to create gRPC client: %w", err)
 	}
 
-	// Create the Jaeger trace provider
-	tracer := trace.NewTracerProvider(
-		trace.WithBatcher(exporter),
-		trace.WithResource(resource.NewWithAttributes(
-			semconv.SchemaURL,
-			semconv.ServiceNameKey.String("simple-opentelemetry"),
-		)),
+	return conn, nil
+}
+
+func initJaeger(
+	ctx context.Context,
+	res *resource.Resource,
+	conn *grpc.ClientConn,
+) (func(context.Context) error, error) {
+	exporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithGRPCConn(conn))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create the Jaeger exporter: %w", err)
+	}
+
+	processor := trace.NewBatchSpanProcessor(exporter)
+	provider := trace.NewTracerProvider(
+		trace.WithSampler(trace.AlwaysSample()),
+		trace.WithResource(res),
+		trace.WithSpanProcessor(processor),
 	)
-	otel.SetTracerProvider(tracer)
+	otel.SetTracerProvider(provider)
 
-	return func() {
-		_ = tracer.Shutdown(context.Background())
-	}
+	otel.SetTextMapPropagator(propagation.TraceContext{})
+
+	return provider.Shutdown, nil
 }
 
 func initTracer() func() {
@@ -58,10 +76,37 @@ func initTracer() func() {
 }
 
 func main() {
-	cleanup := initJaeger()
-	defer cleanup()
+	log.Printf("Waiting for connection...")
 
-	tracer := otel.Tracer("simple-opentelemetry")
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
+
+	conn, err := initConn()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	defer conn.Close()
+
+	res, err := resource.New(ctx, resource.WithAttributes(serviceName))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jaeger, err := initJaeger(ctx, res, conn)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	defer func() {
+		if err = jaeger(ctx); err != nil {
+			log.Printf("failed to shutdown Jaeger exporter: %v", err)
+			return
+		}
+	}()
+
+	tracer := otel.Tracer("test-tracer")
 
 	ctx, span := tracer.Start(context.Background(), "main")
 	defer span.End()
@@ -71,7 +116,7 @@ func main() {
 }
 
 func doWork(ctx context.Context) {
-	tracer := otel.Tracer("simple-opentelemetry")
+	tracer := otel.Tracer("test-tracer")
 	_, span := tracer.Start(ctx, "doWork")
 	defer span.End()
 

@@ -9,4 +9,4 @@ bazel_dep(name = "gazelle", version = "0.35.0")
 
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
-use_repo(go_deps, "io_opentelemetry_go_otel", "io_opentelemetry_go_otel_exporters_jaeger", "io_opentelemetry_go_otel_exporters_stdout_stdouttrace", "io_opentelemetry_go_otel_sdk")
+use_repo(go_deps, "io_opentelemetry_go_otel", "io_opentelemetry_go_otel_exporters_otlp_otlptrace_otlptracegrpc", "io_opentelemetry_go_otel_exporters_stdout_stdouttrace", "io_opentelemetry_go_otel_sdk", "org_golang_google_grpc")
