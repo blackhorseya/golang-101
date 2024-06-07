@@ -14,8 +14,9 @@ import (
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
-	"go.opentelemetry.io/otel/sdk/trace"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -24,9 +25,7 @@ const name = "rolldice"
 
 var serviceName = semconv.ServiceNameKey.String(name)
 
-var (
-	tracer = otel.Tracer(name)
-)
+var tracer trace.Tracer
 
 func initConn() (*grpc.ClientConn, error) {
 	conn, err := grpc.NewClient("localhost:4317", grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -47,11 +46,11 @@ func initJaeger(
 		return nil, fmt.Errorf("failed to create the Jaeger exporter: %w", err)
 	}
 
-	processor := trace.NewBatchSpanProcessor(exporter)
-	provider := trace.NewTracerProvider(
-		trace.WithSampler(trace.AlwaysSample()),
-		trace.WithResource(res),
-		trace.WithSpanProcessor(processor),
+	processor := sdktrace.NewBatchSpanProcessor(exporter)
+	provider := sdktrace.NewTracerProvider(
+		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+		sdktrace.WithResource(res),
+		sdktrace.WithSpanProcessor(processor),
 	)
 	otel.SetTracerProvider(provider)
 
@@ -59,6 +58,8 @@ func initJaeger(
 		propagation.TraceContext{},
 		propagation.Baggage{},
 	))
+
+	tracer = provider.Tracer(name)
 
 	return provider.Shutdown, nil
 }
