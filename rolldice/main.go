@@ -3,17 +3,21 @@ package main
 import (
 	"context"
 	"crypto/rand"
+	"errors"
 	"fmt"
 	"log"
 	"math/big"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/propagation"
+	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
@@ -38,11 +42,7 @@ func initConn() (*grpc.ClientConn, error) {
 	return conn, nil
 }
 
-func initJaeger(
-	ctx context.Context,
-	res *resource.Resource,
-	conn *grpc.ClientConn,
-) (func(context.Context) error, error) {
+func newTracer(ctx context.Context, res *resource.Resource, conn *grpc.ClientConn) (*sdktrace.TracerProvider, error) {
 	exporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithGRPCConn(conn))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create the Jaeger exporter: %w", err)
@@ -63,10 +63,44 @@ func initJaeger(
 
 	tracer = provider.Tracer(name)
 
-	return provider.Shutdown, nil
+	return provider, nil
+}
+
+func newMeter(
+	ctx context.Context,
+	res *resource.Resource,
+	conn *grpc.ClientConn,
+) (p *sdkmetric.MeterProvider, err error) {
+	exporter, err := otlpmetricgrpc.New(ctx, otlpmetricgrpc.WithGRPCConn(conn))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create the OTLP exporter: %w", err)
+	}
+
+	provider := sdkmetric.NewMeterProvider(
+		sdkmetric.WithReader(sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(3*time.Second))),
+		sdkmetric.WithResource(res),
+	)
+	otel.SetMeterProvider(provider)
+
+	meter = provider.Meter(name)
+
+	return provider, nil
 }
 
 func setupOTelSDK(ctx context.Context) (shutdown func(context.Context) error, err error) {
+	var shutdownFuncs []func(context.Context) error
+
+	// shutdown calls cleanup functions registered via shutdownFuncs.
+	// The errors from the calls are joined.
+	// Each registered cleanup will be invoked once.
+	shutdown = func(ctx context.Context) error {
+		for _, fn := range shutdownFuncs {
+			err = errors.Join(err, fn(ctx))
+		}
+		shutdownFuncs = nil
+		return err
+	}
+
 	res, err := resource.New(ctx, resource.WithAttributes(serviceName))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create resource: %w", err)
@@ -77,10 +111,17 @@ func setupOTelSDK(ctx context.Context) (shutdown func(context.Context) error, er
 		return nil, fmt.Errorf("failed to create gRPC client: %w", err)
 	}
 
-	shutdown, err = initJaeger(ctx, res, conn)
+	traceProvider, err := newTracer(ctx, res, conn)
 	if err != nil {
 		return nil, fmt.Errorf("failed to initialize Jaeger: %w", err)
 	}
+	shutdownFuncs = append(shutdownFuncs, traceProvider.Shutdown)
+
+	meterProvider, err := newMeter(ctx, res, conn)
+	if err != nil {
+		return nil, fmt.Errorf("failed to initialize OTLP: %w", err)
+	}
+	shutdownFuncs = append(shutdownFuncs, meterProvider.Shutdown)
 
 	return shutdown, nil
 }

@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "5bbdad3dbf4e4ef1b9b2a5d0a7c8b27254a433f6073724f7e3cefb7a0f2ef28d",
+  "moduleFileHash": "c5ae4ba2e81395847afe3b4926c10f701000b675a46b1366e045d522e002e4e0",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -37,9 +37,12 @@
             "com_github_gin_gonic_gin": "com_github_gin_gonic_gin",
             "io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin": "io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin",
             "io_opentelemetry_go_otel": "io_opentelemetry_go_otel",
+            "io_opentelemetry_go_otel_exporters_otlp_otlpmetric_otlpmetricgrpc": "io_opentelemetry_go_otel_exporters_otlp_otlpmetric_otlpmetricgrpc",
             "io_opentelemetry_go_otel_exporters_otlp_otlptrace_otlptracegrpc": "io_opentelemetry_go_otel_exporters_otlp_otlptrace_otlptracegrpc",
             "io_opentelemetry_go_otel_exporters_stdout_stdouttrace": "io_opentelemetry_go_otel_exporters_stdout_stdouttrace",
+            "io_opentelemetry_go_otel_metric": "io_opentelemetry_go_otel_metric",
             "io_opentelemetry_go_otel_sdk": "io_opentelemetry_go_otel_sdk",
+            "io_opentelemetry_go_otel_sdk_metric": "io_opentelemetry_go_otel_sdk_metric",
             "io_opentelemetry_go_otel_trace": "io_opentelemetry_go_otel_trace",
             "org_golang_google_grpc": "org_golang_google_grpc"
           },
@@ -1493,10 +1496,10 @@
       "general": {
         "bzlTransitiveDigest": "sH0ZfrlZyTTSTIpGNBfQJlEWK7fgxR4W5O3QYxF2pqQ=",
         "recordedFileInputs": {
-          "@@//go.mod": "826093b8d307e6597f6fc228bbd9457601cbc482d0f9c1deba9d391a3de65ac8",
+          "@@//go.mod": "b683b0c996a0f3babcbb0d29a195fb1ae4f6e52331a75253af0d16379eef890e",
           "@@rules_go~//go.mod": "de22304b720f7f61350ec1c9739de6c0a1b1103fd22bfeb6e92c6c843ddc6d6e",
           "@@gazelle~//go.sum": "7c4460e8ecb5dd8691a51d4fa2e9e4751108b933636497ce46db499fc2e7a88d",
-          "@@//go.sum": "3dc44a4a55fb6801ccd23c347360508ea4bff9d90dc271672150f37c51abee8c",
+          "@@//go.sum": "b685a41cdcfc3903277e3f2008d91c9a41949d47f3057f131c0318bf41c6066e",
           "@@rules_go~//go.sum": "d56fdb19b21a5f12bcf625c49432371ac39c2def0f564098fbda107f7c080f40",
           "@@gazelle~//go.mod": "48dc6e771c3028ee1c18b9ffc81e596fd5f6d7e0016c5ef280e30f2821f60473"
         },
@@ -1668,6 +1671,21 @@
               "version": "v1.27.0"
             }
           },
+          "io_opentelemetry_go_otel_exporters_otlp_otlpmetric_otlpmetricgrpc": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:bFgvUr3/O4PHj3VQcFEuYKvRZJX1SJDQ+11JXuSB3/w=",
+              "replace": "",
+              "version": "v1.27.0"
+            }
+          },
           "com_github_modern_go_concurrent": {
             "bzlFile": "@@gazelle~//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
@@ -1693,9 +1711,9 @@
               "build_extra_args": [],
               "patches": [],
               "patch_args": [],
-              "sum": "h1:P8OJ/WCl/Xo4E4zoe4/bifHpSmmKwARqyqE4nW6J2GQ=",
+              "sum": "h1:+rdxYoE3E5htTEWIe15GlN6IfvbURM//Jt0mmkmm6ZU=",
               "replace": "",
-              "version": "v0.0.0-20240520151616-dc85e6b867a5"
+              "version": "v0.0.0-20240604185151-ef581f913117"
             }
           },
           "org_golang_google_protobuf": {
@@ -2147,9 +2165,9 @@
               "build_extra_args": [],
               "patches": [],
               "patch_args": [],
-              "sum": "h1:AgADTJarZTBqgjiUzRgfaBchgYB3/WFTC80GPwsMcRI=",
+              "sum": "h1:1GBuWVLM/KMVUv1t1En5Gs+gFZCNd360GGb4sSxtrhU=",
               "replace": "",
-              "version": "v0.0.0-20240515191416-fc5f0ca64291"
+              "version": "v0.0.0-20240604185151-ef581f913117"
             }
           },
           "com_github_google_go_cmp": {
@@ -2165,6 +2183,21 @@
               "sum": "h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=",
               "replace": "",
               "version": "v0.6.0"
+            }
+          },
+          "io_opentelemetry_go_otel_sdk_metric": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "go.opentelemetry.io/otel/sdk/metric",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:5uGNOlpXi+Hbo/DRoI31BSb1v+OGcpv2NemcCrOL8gI=",
+              "replace": "",
+              "version": "v1.27.0"
             }
           },
           "com_github_go_logr_stdr": {
@@ -2192,9 +2225,9 @@
               "build_extra_args": [],
               "patches": [],
               "patch_args": [],
-              "sum": "h1:pKouT5E8xu9zeFC39JXRDukb6JFQPXM5p5I91188VAQ=",
+              "sum": "h1:6pFjapn8bFcIbiKo3XT4j/BhANplGihG6tvd+8rYgrY=",
               "replace": "",
-              "version": "v1.4.1"
+              "version": "v1.4.2"
             }
           },
           "org_golang_x_text": {
@@ -2295,9 +2328,12 @@
                 "com_github_gin_gonic_gin": "github.com/gin-gonic/gin",
                 "io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin": "go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin",
                 "io_opentelemetry_go_otel": "go.opentelemetry.io/otel",
+                "io_opentelemetry_go_otel_exporters_otlp_otlpmetric_otlpmetricgrpc": "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc",
                 "io_opentelemetry_go_otel_exporters_otlp_otlptrace_otlptracegrpc": "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc",
                 "io_opentelemetry_go_otel_exporters_stdout_stdouttrace": "go.opentelemetry.io/otel/exporters/stdout/stdouttrace",
+                "io_opentelemetry_go_otel_metric": "go.opentelemetry.io/otel/metric",
                 "io_opentelemetry_go_otel_sdk": "go.opentelemetry.io/otel/sdk",
+                "io_opentelemetry_go_otel_sdk_metric": "go.opentelemetry.io/otel/sdk/metric",
                 "io_opentelemetry_go_otel_trace": "go.opentelemetry.io/otel/trace",
                 "org_golang_google_grpc": "google.golang.org/grpc",
                 "com_github_bytedance_sonic": "github.com/bytedance/sonic",
@@ -2324,7 +2360,6 @@
                 "com_github_twitchyliquid64_golang_asm": "github.com/twitchyliquid64/golang-asm",
                 "com_github_ugorji_go_codec": "github.com/ugorji/go/codec",
                 "io_opentelemetry_go_otel_exporters_otlp_otlptrace": "go.opentelemetry.io/otel/exporters/otlp/otlptrace",
-                "io_opentelemetry_go_otel_metric": "go.opentelemetry.io/otel/metric",
                 "io_opentelemetry_go_proto_otlp": "go.opentelemetry.io/proto/otlp",
                 "org_golang_x_arch": "golang.org/x/arch",
                 "org_golang_x_crypto": "golang.org/x/crypto",
@@ -2440,9 +2475,12 @@
             "com_github_gin_gonic_gin",
             "io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin",
             "io_opentelemetry_go_otel",
+            "io_opentelemetry_go_otel_exporters_otlp_otlpmetric_otlpmetricgrpc",
             "io_opentelemetry_go_otel_exporters_otlp_otlptrace_otlptracegrpc",
             "io_opentelemetry_go_otel_exporters_stdout_stdouttrace",
+            "io_opentelemetry_go_otel_metric",
             "io_opentelemetry_go_otel_sdk",
+            "io_opentelemetry_go_otel_sdk_metric",
             "io_opentelemetry_go_otel_trace",
             "org_golang_google_grpc"
           ],
