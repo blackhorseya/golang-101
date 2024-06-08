@@ -12,6 +12,9 @@ exporters:
     endpoint: jaeger:4317
     tls:
       insecure: true
+  prometheus:
+    endpoint: 0.0.0.0:9090
+    namespace: rolldice
   debug:
 
 service:
@@ -24,4 +27,11 @@ service:
       processors: [ ]
       exporters:
         - otlp
+        - debug
+    metrics:
+      receivers:
+        - otlp
+      processors: [ ]
+      exporters:
+        - prometheus
         - debug

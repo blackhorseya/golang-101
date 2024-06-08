@@ -8,8 +8,16 @@ services:
       - 4317:4317
     depends_on:
       - jaeger
+      - prometheus
 
   jaeger:
     image: jaegertracing/all-in-one
     ports:
       - 16686:16686
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
