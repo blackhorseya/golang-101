@@ -32,6 +32,7 @@ var serviceName = semconv.ServiceNameKey.String(name)
 
 var tracer trace.Tracer
 var meter metric.Meter
+var rollCounter metric.Int64Counter
 
 func initConn() (*grpc.ClientConn, error) {
 	conn, err := grpc.NewClient("localhost:4317", grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -83,6 +84,15 @@ func newMeter(
 	otel.SetMeterProvider(provider)
 
 	meter = provider.Meter(name)
+
+	rollCounter, err = meter.Int64Counter(
+		"dice.rolls",
+		metric.WithDescription("The number of dice rolls"),
+		metric.WithUnit("{roll}"),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create the counter: %w", err)
+	}
 
 	return provider, nil
 }
@@ -152,7 +162,7 @@ func main() {
 }
 
 func rolldice(c *gin.Context) {
-	_, span := tracer.Start(c.Request.Context(), "roll")
+	ctx, span := tracer.Start(c.Request.Context(), "roll")
 	defer span.End()
 
 	// Define the number of sides on the die
@@ -168,7 +178,9 @@ func rolldice(c *gin.Context) {
 	// Add 1 to the result to get a number in the range [1, sides]
 	roll := n.Int64() + 1
 
-	span.SetAttributes(attribute.Int("roll.value", int(roll)))
+	rollValueAttr := attribute.Int("roll.value", int(roll))
+	span.SetAttributes(rollValueAttr)
+	rollCounter.Add(ctx, 1, metric.WithAttributes(rollValueAttr))
 
 	c.JSON(200, gin.H{"roll": roll})
 }
