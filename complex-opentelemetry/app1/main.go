@@ -1,24 +1,40 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"time"
 
+	"github.com/blackhorseya/golang-101/pkg/otelx"
 	"github.com/blackhorseya/golang-101/pkg/timex"
 	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
 
-const name = "app1"
-const addr = ":8080"
+const (
+	name       = "app1"
+	addr       = ":8080"
+	otelTarget = "localhost:4317"
+)
 
 func main() {
+	err := otelx.SetupOTelSDK(context.Background(), otelTarget, name)
+	if err != nil {
+		log.Fatalf("Failed to setup OpenTelemetry SDK: %v", err)
+	}
+	defer func() {
+		err = otelx.Shutdown(context.Background())
+		if err != nil {
+			log.Printf("Failed to shutdown OpenTelemetry SDK: %v", err)
+		}
+	}()
+
 	router := gin.Default()
 	router.Use(otelgin.Middleware(name))
 	router.GET("/work", work)
 
-	err := router.Run(addr)
+	err = router.Run(addr)
 	if err != nil {
 		log.Fatalf("Failed to start the server: %v", err)
 	}
