@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	name       = "app1"
-	addr       = ":8080"
+	name       = "app3"
+	addr       = ":8082"
 	otelTarget = "localhost:4317"
 )
 

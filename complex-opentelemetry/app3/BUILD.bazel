@@ -1,0 +1,20 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "app3_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/blackhorseya/golang-101/complex-opentelemetry/app3",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//pkg/otelx",
+        "//pkg/timex",
+        "@com_github_gin_gonic_gin//:gin",
+        "@io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin//:otelgin",
+    ],
+)
+
+go_binary(
+    name = "app3",
+    embed = [":app3_lib"],
+    visibility = ["//visibility:public"],
+)
