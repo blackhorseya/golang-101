@@ -1,0 +1,8 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "timex",
+    srcs = ["timex.go"],
+    importpath = "github.com/blackhorseya/golang-101/pkg/timex",
+    visibility = ["//visibility:public"],
+)
