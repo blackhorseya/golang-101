@@ -109,10 +109,10 @@
         "bzlTransitiveDigest": "3lAltYJp6u8Z4k9qI7Nn1s2S5dTYTxi80hAMysQWRJE=",
         "usagesDigest": "StKV/ipZp/3gjfUP+wcd0JP+irv+FaShpTYesDX2+jo=",
         "recordedFileInputs": {
-          "@@//go.mod": "b683b0c996a0f3babcbb0d29a195fb1ae4f6e52331a75253af0d16379eef890e",
+          "@@//go.mod": "e2f878f348a10fef6cfe2ac4ecd865d57e0c52297037098c7f0f7634392ab0ed",
           "@@rules_go~//go.mod": "de22304b720f7f61350ec1c9739de6c0a1b1103fd22bfeb6e92c6c843ddc6d6e",
           "@@gazelle~//go.sum": "7c4460e8ecb5dd8691a51d4fa2e9e4751108b933636497ce46db499fc2e7a88d",
-          "@@//go.sum": "b685a41cdcfc3903277e3f2008d91c9a41949d47f3057f131c0318bf41c6066e",
+          "@@//go.sum": "1293e8778cc4d95312164e0e1e029e99feed4f8746149a83331077b9ac264fdd",
           "@@rules_go~//go.sum": "d56fdb19b21a5f12bcf625c49432371ac39c2def0f564098fbda107f7c080f40",
           "@@gazelle~//go.mod": "48dc6e771c3028ee1c18b9ffc81e596fd5f6d7e0016c5ef280e30f2821f60473"
         },
@@ -284,6 +284,21 @@
               "version": "v1.27.0"
             }
           },
+          "com_github_felixge_httpsnoop": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "github.com/felixge/httpsnoop",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=",
+              "replace": "",
+              "version": "v1.0.4"
+            }
+          },
           "io_opentelemetry_go_otel_exporters_otlp_otlpmetric_otlpmetricgrpc": {
             "bzlFile": "@@gazelle~//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
@@ -447,6 +462,21 @@
               "sum": "h1:mnl8DM0o513X8fdIkmyFE/5hTYxbwYOjDS/+rK6qpRI=",
               "replace": "",
               "version": "v0.24.0"
+            }
+          },
+          "io_opentelemetry_go_contrib_instrumentation_net_http_otelhttp": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:9l89oX4ba9kHbBol3Xin3leYJ+252h0zszDtBwyKe2A=",
+              "replace": "",
+              "version": "v0.52.0"
             }
           },
           "com_github_golang_protobuf": {
@@ -940,6 +970,7 @@
               "importpaths": {
                 "com_github_gin_gonic_gin": "github.com/gin-gonic/gin",
                 "io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin": "go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin",
+                "io_opentelemetry_go_contrib_instrumentation_net_http_otelhttp": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
                 "io_opentelemetry_go_otel": "go.opentelemetry.io/otel",
                 "io_opentelemetry_go_otel_exporters_otlp_otlpmetric_otlpmetricgrpc": "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc",
                 "io_opentelemetry_go_otel_exporters_otlp_otlptrace_otlptracegrpc": "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc",
@@ -954,6 +985,7 @@
                 "com_github_cenkalti_backoff_v4": "github.com/cenkalti/backoff/v4",
                 "com_github_cloudwego_base64x": "github.com/cloudwego/base64x",
                 "com_github_cloudwego_iasm": "github.com/cloudwego/iasm",
+                "com_github_felixge_httpsnoop": "github.com/felixge/httpsnoop",
                 "com_github_gabriel_vasile_mimetype": "github.com/gabriel-vasile/mimetype",
                 "com_github_gin_contrib_sse": "github.com/gin-contrib/sse",
                 "com_github_go_logr_logr": "github.com/go-logr/logr",
@@ -1087,6 +1119,7 @@
           "explicitRootModuleDirectDeps": [
             "com_github_gin_gonic_gin",
             "io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin",
+            "io_opentelemetry_go_contrib_instrumentation_net_http_otelhttp",
             "io_opentelemetry_go_otel",
             "io_opentelemetry_go_otel_exporters_otlp_otlpmetric_otlpmetricgrpc",
             "io_opentelemetry_go_otel_exporters_otlp_otlptrace_otlptracegrpc",

@@ -9,6 +9,7 @@ go_library(
         "//pkg/otelx",
         "@com_github_gin_gonic_gin//:gin",
         "@io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin//:otelgin",
+        "@io_opentelemetry_go_contrib_instrumentation_net_http_otelhttp//:otelhttp",
     ],
 )
 
