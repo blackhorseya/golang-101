@@ -48,7 +48,7 @@ func work(c *gin.Context) {
 	time.Sleep(duration)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message":         "work done",
+		"message":         "Hello from app2!",
 		"duration_second": duration.Seconds(),
 	})
 }

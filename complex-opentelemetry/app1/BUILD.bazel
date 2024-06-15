@@ -7,7 +7,6 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//pkg/otelx",
-        "//pkg/timex",
         "@com_github_gin_gonic_gin//:gin",
         "@io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin//:otelgin",
     ],

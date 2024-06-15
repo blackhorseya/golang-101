@@ -3,11 +3,8 @@ package main
 import (
 	"context"
 	"log"
-	"net/http"
-	"time"
 
 	"github.com/blackhorseya/golang-101/pkg/otelx"
-	"github.com/blackhorseya/golang-101/pkg/timex"
 	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
@@ -44,11 +41,7 @@ func main() {
 }
 
 func work(c *gin.Context) {
-	duration := timex.GetRandomDuration(1, 3)
-	time.Sleep(duration)
-
-	c.JSON(http.StatusOK, gin.H{
-		"message":         "work done",
-		"duration_second": duration.Seconds(),
+	c.JSON(200, gin.H{
+		"message": "Hello from app1!",
 	})
 }
