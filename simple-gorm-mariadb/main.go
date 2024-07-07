@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -21,6 +22,10 @@ func main() {
 		return
 	}
 	defer sqlDB.Close()
+
+	sqlDB.SetMaxOpenConns(500)
+	sqlDB.SetMaxIdleConns(100)
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
 	// Ping the database to check if the connection is successful
 	err = sqlDB.Ping()
