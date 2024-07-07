@@ -7,8 +7,9 @@ import (
 	"gorm.io/gorm"
 )
 
+const dsn = "root:changeme@tcp(127.0.0.1:3306)/golang_101?charset=utf8mb4&parseTime=True&loc=Local"
+
 func main() {
-	dsn := "root:changeme@tcp(127.0.0.1:3306)/golang_101?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("open db error: %v", err)
@@ -52,6 +53,11 @@ func main() {
 		log.Printf("begin tx error: %v", tx.Error)
 		return
 	}
+	defer func() {
+		if r := recover(); r != nil || err != nil {
+			tx.Rollback()
+		}
+	}()
 
 	err = tx.Create(order).Error
 	if err != nil {
