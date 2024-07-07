@@ -62,13 +62,16 @@ func main() {
 	log.Println("Order created successfully with ID:", order.ID)
 
 	// List all orders
-	_, total, err := listOrders(db, listCondition{
+	orders, total, err := listOrders(db, listCondition{
 		Limit:  10,
 		Offset: 0,
 	})
 	if err != nil {
 		log.Printf("list orders error: %v", err)
 		return
+	}
+	for _, o := range orders {
+		log.Printf("order: %+v\n", o)
 	}
 	log.Printf("total orders: %d\n", total)
 
@@ -146,6 +149,10 @@ func listOrders(db *gorm.DB, cond listCondition) (items []*Order, total int, err
 }
 
 func getOrderByID(db *gorm.DB, orderID int64) (*Order, error) {
-	// todo: 2024/7/7|sean|get order by id
-	panic("implement me")
+	order := new(Order)
+	err := db.Preload("Items").First(order, orderID).Error
+	if err != nil {
+		return nil, err
+	}
+	return order, nil
 }
