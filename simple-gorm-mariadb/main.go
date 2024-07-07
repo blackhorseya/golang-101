@@ -14,22 +14,27 @@ func main() {
 		log.Fatalf("open db error: %v", err)
 	}
 
-	// ping the database to check if the connection is successful
+	// Get the underlying sql.DB object to close the connection later
 	sqlDB, err := db.DB()
 	if err != nil {
-		log.Fatalf("get db error: %v", err)
+		log.Printf("get db error: %v", err)
+		return
 	}
 	defer sqlDB.Close()
 
+	// Ping the database to check if the connection is successful
 	err = sqlDB.Ping()
 	if err != nil {
-		log.Fatalf("ping db error: %v", err)
+		log.Printf("ping db error: %v", err)
+		return
 	}
 	log.Println("Database connection successful")
 
+	// Perform auto migration
 	err = db.AutoMigrate()
 	if err != nil {
-		log.Fatalf("auto migrate error: %v", err)
+		log.Printf("auto migrate error: %v", err)
+		return
 	}
 	log.Println("Auto migration completed")
 }
