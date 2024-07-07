@@ -31,10 +31,43 @@ func main() {
 	log.Println("Database connection successful")
 
 	// Perform auto migration
-	err = db.AutoMigrate()
+	err = db.AutoMigrate(&Order{}, &OrderItem{})
 	if err != nil {
 		log.Printf("auto migrate error: %v", err)
 		return
 	}
 	log.Println("Auto migration completed")
+
+	// Create a new order
+	order := &Order{
+		Items: []*OrderItem{
+			{ItemID: 1, Quantity: 2, Price: 10.0},
+			{ItemID: 2, Quantity: 1, Price: 20.0},
+		},
+	}
+
+	// Save the order using transaction
+	tx := db.Begin()
+	if tx.Error != nil {
+		log.Printf("begin tx error: %v", tx.Error)
+		return
+	}
+
+	err = tx.Create(order).Error
+	if err != nil {
+		tx.Rollback()
+		log.Printf("create order error: %v", err)
+		return
+	}
+
+	err = tx.Commit().Error
+	if err != nil {
+		log.Printf("commit tx error: %v", err)
+		return
+	}
+	log.Printf("order created: %v", order.ID)
+
+	// todo: 2024/7/7|sean|list all orders
+
+	// todo: 2024/7/7|sean|get order by id
 }
