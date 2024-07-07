@@ -85,26 +85,21 @@ func main() {
 	log.Printf("order with ID %d: %+v\n", orderID, order)
 }
 
-func createOrder(db *gorm.DB, order *Order) error {
+func createOrder(db *gorm.DB, order *Order) (err error) {
 	tx := db.Begin()
 	if tx.Error != nil {
 		return tx.Error
 	}
 	defer func() {
-		if r := recover(); r != nil {
+		if r := recover(); r != nil || err != nil {
 			tx.Rollback()
+		} else {
+			tx.Commit()
 		}
 	}()
 
-	err := tx.Create(order).Error
+	err = tx.Create(order).Error
 	if err != nil {
-		tx.Rollback()
-		return err
-	}
-
-	err = tx.Commit().Error
-	if err != nil {
-		tx.Rollback()
 		return err
 	}
 
