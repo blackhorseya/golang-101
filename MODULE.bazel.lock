@@ -109,10 +109,10 @@
         "bzlTransitiveDigest": "3lAltYJp6u8Z4k9qI7Nn1s2S5dTYTxi80hAMysQWRJE=",
         "usagesDigest": "StKV/ipZp/3gjfUP+wcd0JP+irv+FaShpTYesDX2+jo=",
         "recordedFileInputs": {
-          "@@//go.mod": "e2f878f348a10fef6cfe2ac4ecd865d57e0c52297037098c7f0f7634392ab0ed",
+          "@@//go.mod": "dd2869414e489ab36744c472979b66786351d648facf7d65932ee8f4b5f53f7a",
           "@@rules_go~//go.mod": "de22304b720f7f61350ec1c9739de6c0a1b1103fd22bfeb6e92c6c843ddc6d6e",
           "@@gazelle~//go.sum": "7c4460e8ecb5dd8691a51d4fa2e9e4751108b933636497ce46db499fc2e7a88d",
-          "@@//go.sum": "1293e8778cc4d95312164e0e1e029e99feed4f8746149a83331077b9ac264fdd",
+          "@@//go.sum": "e9c903b3741a8538610d2f2a8150ecdd3b3fdc65b933a40111e2423bca6fcfc2",
           "@@rules_go~//go.sum": "d56fdb19b21a5f12bcf625c49432371ac39c2def0f564098fbda107f7c080f40",
           "@@gazelle~//go.mod": "48dc6e771c3028ee1c18b9ffc81e596fd5f6d7e0016c5ef280e30f2821f60473"
         },
@@ -132,6 +132,21 @@
               "sum": "h1:cOIJqWBl99H1dH5LWizPa+0ImeeJq3t3cJjaeOWUAL4=",
               "replace": "",
               "version": "v0.1.0-deprecated"
+            }
+          },
+          "io_gorm_gorm": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "gorm.io/gorm",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:dQpO+33KalOA+aFYGlK+EfxcI5MbO7EP2yYygwh9h+s=",
+              "replace": "",
+              "version": "v1.25.10"
             }
           },
           "com_github_fsnotify_fsnotify": {
@@ -162,6 +177,21 @@
               "sum": "h1:QjV6pZ7/XZ7ryI2KuyeEDE8wnh7fHP9YnQy+R0LnH8I=",
               "replace": "",
               "version": "v1.4.4"
+            }
+          },
+          "io_filippo_edwards25519": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "filippo.io/edwards25519",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:FNf4tywRC1HmFuKW5xopWpigGjJKiJSV0Cqo0cJWDaA=",
+              "replace": "",
+              "version": "v1.1.0"
             }
           },
           "io_opentelemetry_go_proto_otlp": {
@@ -207,6 +237,21 @@
               "sum": "h1:soB7SVo0PWrY4vPW/+ay0jKDNScG2X9wFeYlXIvJsOQ=",
               "replace": "",
               "version": "v0.26.0"
+            }
+          },
+          "com_github_jinzhu_inflection": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "github.com/jinzhu/inflection",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=",
+              "replace": "",
+              "version": "v1.0.0"
             }
           },
           "com_github_golang_mock": {
@@ -494,6 +539,21 @@
               "version": "v1.5.3"
             }
           },
+          "com_github_jinzhu_now": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "github.com/jinzhu/now",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:/o9tlHleP7gOFmsnYNz3RGnqzefHA47wQpKrrdTIwXQ=",
+              "replace": "",
+              "version": "v1.1.5"
+            }
+          },
           "io_opentelemetry_go_otel_sdk": {
             "bzlFile": "@@gazelle~//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
@@ -736,6 +796,21 @@
               "version": "v1.3.2"
             }
           },
+          "io_gorm_driver_mysql": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "gorm.io/driver/mysql",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:MndhOPYOfEp2rHKgkZIhJ16eVUIRf2HmzgoPmh7FCWo=",
+              "replace": "",
+              "version": "v1.5.7"
+            }
+          },
           "org_golang_google_grpc": {
             "bzlFile": "@@gazelle~//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
@@ -856,6 +931,21 @@
               "sum": "h1:hSWxHoqTgW2S2qGc0LTAI563KZ5YKYRhT3MFKZMbjag=",
               "replace": "",
               "version": "v1.2.2"
+            }
+          },
+          "com_github_go_sql_driver_mysql": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "github.com/go-sql-driver/mysql",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:LedoTUt/eveggdHS9qUFC1EFSa8bU2+1pZjSRpvNJ1Y=",
+              "replace": "",
+              "version": "v1.8.1"
             }
           },
           "com_github_go_logr_logr": {
@@ -980,6 +1070,9 @@
                 "io_opentelemetry_go_otel_sdk_metric": "go.opentelemetry.io/otel/sdk/metric",
                 "io_opentelemetry_go_otel_trace": "go.opentelemetry.io/otel/trace",
                 "org_golang_google_grpc": "google.golang.org/grpc",
+                "io_gorm_driver_mysql": "gorm.io/driver/mysql",
+                "io_gorm_gorm": "gorm.io/gorm",
+                "io_filippo_edwards25519": "filippo.io/edwards25519",
                 "com_github_bytedance_sonic": "github.com/bytedance/sonic",
                 "com_github_bytedance_sonic_loader": "github.com/bytedance/sonic/loader",
                 "com_github_cenkalti_backoff_v4": "github.com/cenkalti/backoff/v4",
@@ -993,8 +1086,11 @@
                 "com_github_go_playground_locales": "github.com/go-playground/locales",
                 "com_github_go_playground_universal_translator": "github.com/go-playground/universal-translator",
                 "com_github_go_playground_validator_v10": "github.com/go-playground/validator/v10",
+                "com_github_go_sql_driver_mysql": "github.com/go-sql-driver/mysql",
                 "com_github_goccy_go_json": "github.com/goccy/go-json",
                 "com_github_grpc_ecosystem_grpc_gateway_v2": "github.com/grpc-ecosystem/grpc-gateway/v2",
+                "com_github_jinzhu_inflection": "github.com/jinzhu/inflection",
+                "com_github_jinzhu_now": "github.com/jinzhu/now",
                 "com_github_json_iterator_go": "github.com/json-iterator/go",
                 "com_github_klauspost_cpuid_v2": "github.com/klauspost/cpuid/v2",
                 "com_github_leodido_go_urn": "github.com/leodido/go-urn",
@@ -1128,7 +1224,9 @@
             "io_opentelemetry_go_otel_sdk",
             "io_opentelemetry_go_otel_sdk_metric",
             "io_opentelemetry_go_otel_trace",
-            "org_golang_google_grpc"
+            "org_golang_google_grpc",
+            "io_gorm_driver_mysql",
+            "io_gorm_gorm"
           ],
           "explicitRootModuleDirectDevDeps": [],
           "useAllRepos": "NO",
@@ -1212,7 +1310,7 @@
     },
     "@@rules_go~//go:extensions.bzl%go_sdk": {
       "os:osx,arch:aarch64": {
-        "bzlTransitiveDigest": "ngSfLTe8hQiidDeEb6YUqr77yNHrYln0spUfoRZ8O5I=",
+        "bzlTransitiveDigest": "JFrCnX1tTDAqjKVGYDdGNiwf4OvEAFVF170rNP7HQPw=",
         "usagesDigest": "t42fHYn0lthNPva9lgQhz8FrlDC7TW0d8ihhm0nLF3I=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
