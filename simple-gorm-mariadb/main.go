@@ -120,13 +120,6 @@ func listOrders(db *gorm.DB, cond listCondition) (items []*Order, total int, err
 	// Initialize the query
 	query := db.Model(&Order{})
 
-	// Get total count
-	var count int64
-	err = query.Count(&count).Error
-	if err != nil {
-		return nil, 0, err
-	}
-
 	// Apply limit and offset
 	if cond.Limit <= 0 {
 		cond.Limit = defaultLimit
@@ -139,8 +132,9 @@ func listOrders(db *gorm.DB, cond listCondition) (items []*Order, total int, err
 	// Order by id descending
 	query = query.Order("id DESC")
 
+	var count int64
 	var orders []*Order
-	err = query.Find(&orders).Error
+	err = query.Count(&count).Find(&orders).Error
 	if err != nil {
 		return nil, 0, err
 	}
