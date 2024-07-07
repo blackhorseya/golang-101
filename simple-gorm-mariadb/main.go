@@ -8,7 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
-const dsn = "root:changeme@tcp(127.0.0.1:3306)/golang_101?charset=utf8mb4&parseTime=True&loc=Local"
+const (
+	dsn          = "root:changeme@tcp(127.0.0.1:3306)/golang_101?charset=utf8mb4&parseTime=True&loc=Local"
+	defaultLimit = 100
+)
 
 func main() {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
@@ -51,34 +54,98 @@ func main() {
 			{ItemID: 2, Quantity: 1, Price: 20.0},
 		},
 	}
-
-	// Save the order using transaction
-	tx := db.Begin()
-	if tx.Error != nil {
-		log.Printf("begin tx error: %v", tx.Error)
+	err = createOrder(db, order)
+	if err != nil {
+		log.Printf("create order error: %v", err)
 		return
 	}
+	log.Println("Order created successfully with ID:", order.ID)
+
+	// List all orders
+	_, total, err := listOrders(db, listCondition{
+		Limit:  10,
+		Offset: 0,
+	})
+	if err != nil {
+		log.Printf("list orders error: %v", err)
+		return
+	}
+	log.Printf("total orders: %d\n", total)
+
+	// Get order by ID
+	orderID := order.ID
+	order, err = getOrderByID(db, orderID)
+	if err != nil {
+		log.Printf("get order by ID error: %v", err)
+		return
+	}
+	log.Printf("order with ID %d: %+v\n", orderID, order)
+}
+
+func createOrder(db *gorm.DB, order *Order) error {
+	tx := db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
 	defer func() {
-		if r := recover(); r != nil || err != nil {
+		if r := recover(); r != nil {
 			tx.Rollback()
 		}
 	}()
 
-	err = tx.Create(order).Error
+	err := tx.Create(order).Error
 	if err != nil {
 		tx.Rollback()
-		log.Printf("create order error: %v", err)
-		return
+		return err
 	}
 
 	err = tx.Commit().Error
 	if err != nil {
-		log.Printf("commit tx error: %v", err)
-		return
+		tx.Rollback()
+		return err
 	}
-	log.Printf("order created: %v", order.ID)
 
-	// todo: 2024/7/7|sean|list all orders
+	return nil
+}
 
+type listCondition struct {
+	Limit  int
+	Offset int
+}
+
+func listOrders(db *gorm.DB, cond listCondition) (items []*Order, total int, err error) {
+	// Initialize the query
+	query := db.Model(&Order{})
+
+	// Get total count
+	var count int64
+	err = query.Count(&count).Error
+	if err != nil {
+		return nil, 0, err
+	}
+
+	// Apply limit and offset
+	if cond.Limit <= 0 {
+		cond.Limit = defaultLimit
+	}
+	if cond.Offset < 0 {
+		cond.Offset = 0
+	}
+	query = query.Limit(cond.Limit).Offset(cond.Offset)
+
+	// Order by id descending
+	query = query.Order("id DESC")
+
+	var orders []*Order
+	err = query.Find(&orders).Error
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return orders, int(count), nil
+}
+
+func getOrderByID(db *gorm.DB, orderID int64) (*Order, error) {
 	// todo: 2024/7/7|sean|get order by id
+	panic("implement me")
 }
