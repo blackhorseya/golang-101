@@ -112,31 +112,22 @@ type listCondition struct {
 }
 
 func listOrders(db *gorm.DB, cond listCondition) (items []*Order, total int, err error) {
-	// Initialize the query
-	query := db.Model(&Order{})
-
-	// Apply limit and offset
 	if cond.Limit <= 0 {
 		cond.Limit = defaultLimit
 	}
 	if cond.Offset < 0 {
 		cond.Offset = 0
 	}
-	query = query.Limit(cond.Limit).Offset(cond.Offset)
-
-	// Order by id descending
-	query = query.Order("id DESC")
 
 	var count int64
 	var orders []*Order
-	err = query.Count(&count).Find(&orders).Error
+	err = db.Model(&Order{}).Limit(cond.Limit).Offset(cond.Offset).Order("id DESC").Count(&count).Find(&orders).Error
 	if err != nil {
 		return nil, 0, err
 	}
 
 	return orders, int(count), nil
 }
-
 func getOrderByID(db *gorm.DB, orderID int64) (*Order, error) {
 	order := new(Order)
 	err := db.Preload("Items").First(order, orderID).Error
