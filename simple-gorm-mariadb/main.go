@@ -135,3 +135,8 @@ func getOrderByID(db *gorm.DB, orderID int64) (*Order, error) {
 	}
 	return order, nil
 }
+
+func updateOrder(db *gorm.DB, order *Order) error {
+	// todo: 2024/7/10|sean|implement update order
+	panic("implement me")
+}
