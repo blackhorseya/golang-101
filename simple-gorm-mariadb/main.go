@@ -13,31 +13,35 @@ const (
 	defaultLimit = 100
 )
 
-func main() {
+func setupDatabase(dsn string) (*gorm.DB, error) {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("open db error: %v", err)
+		return nil, err
 	}
 
-	// Get the underlying sql.DB object to close the connection later
 	sqlDB, err := db.DB()
 	if err != nil {
-		log.Printf("get db error: %v", err)
-		return
+		return nil, err
 	}
-	defer sqlDB.Close()
 
 	sqlDB.SetMaxOpenConns(500)
 	sqlDB.SetMaxIdleConns(100)
 	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
-	// Ping the database to check if the connection is successful
-	err = sqlDB.Ping()
+	if err = sqlDB.Ping(); err != nil {
+		return nil, err
+	}
+
+	return db, nil
+}
+
+func main() {
+	db, err := setupDatabase(dsn)
 	if err != nil {
-		log.Printf("ping db error: %v", err)
+		log.Printf("setup database error: %v", err)
 		return
 	}
-	log.Println("Database connection successful")
+	log.Println("Database connected")
 
 	// Perform auto migration
 	err = db.AutoMigrate(&Order{}, &OrderItem{})
