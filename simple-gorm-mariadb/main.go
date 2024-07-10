@@ -102,12 +102,7 @@ func createOrder(db *gorm.DB, order *Order) (err error) {
 		}
 	}()
 
-	err = tx.Create(order).Error
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return tx.Create(order).Error
 }
 
 type listCondition struct {
