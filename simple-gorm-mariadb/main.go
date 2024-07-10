@@ -57,6 +57,7 @@ func main() {
 			{ItemID: 1, Quantity: 2, Price: 10.0},
 			{ItemID: 2, Quantity: 1, Price: 20.0},
 		},
+		Status: "pending",
 	}
 	err = createOrder(db, order)
 	if err != nil {
@@ -87,6 +88,23 @@ func main() {
 		return
 	}
 	log.Printf("order with ID %d: %+v\n", orderID, order)
+
+	// Update order
+	order.Status = "completed"
+	err = updateOrder(db, order)
+	if err != nil {
+		log.Printf("update order error: %v", err)
+		return
+	}
+	log.Println("Order updated successfully")
+
+	// Delete order
+	err = deleteOrder(db, orderID)
+	if err != nil {
+		log.Printf("delete order error: %v", err)
+		return
+	}
+	log.Println("Order deleted successfully")
 }
 
 func createOrder(db *gorm.DB, order *Order) (err error) {
@@ -134,4 +152,24 @@ func getOrderByID(db *gorm.DB, orderID int64) (*Order, error) {
 		return nil, err
 	}
 	return order, nil
+}
+
+func updateOrder(db *gorm.DB, order *Order) (err error) {
+	tx := db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+	defer func() {
+		if r := recover(); r != nil || err != nil {
+			tx.Rollback()
+		} else {
+			tx.Commit()
+		}
+	}()
+
+	return tx.Save(order).Error
+}
+
+func deleteOrder(db *gorm.DB, orderID int64) error {
+	return db.Delete(&Order{}, orderID).Error
 }
