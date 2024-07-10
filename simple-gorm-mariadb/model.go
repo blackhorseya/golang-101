@@ -2,8 +2,9 @@ package main
 
 // Order is a struct that represents the order table in the database
 type Order struct {
-	ID    int64        `gorm:"primaryKey;autoIncrement"`
-	Items []*OrderItem `gorm:"foreignKey:OrderID;references:ID"`
+	ID     int64        `gorm:"primaryKey;autoIncrement"`
+	Items  []*OrderItem `gorm:"foreignKey:OrderID;references:ID;constraint:OnDelete:CASCADE"`
+	Status string       `gorm:"not null"`
 }
 
 // OrderItem is a struct that represents the order_item table in the database
