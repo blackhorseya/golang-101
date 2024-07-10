@@ -136,12 +136,22 @@ func getOrderByID(db *gorm.DB, orderID int64) (*Order, error) {
 	return order, nil
 }
 
-func updateOrder(db *gorm.DB, order *Order) error {
-	// todo: 2024/7/10|sean|implement update order
-	panic("implement me")
+func updateOrder(db *gorm.DB, order *Order) (err error) {
+	tx := db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+	defer func() {
+		if r := recover(); r != nil || err != nil {
+			tx.Rollback()
+		} else {
+			tx.Commit()
+		}
+	}()
+
+	return tx.Save(order).Error
 }
 
 func deleteOrder(db *gorm.DB, orderID int64) error {
-	// todo: 2024/7/10|sean|implement delete order
-	panic("implement me")
+	return db.Delete(&Order{}, orderID).Error
 }
