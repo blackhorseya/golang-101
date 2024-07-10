@@ -140,3 +140,8 @@ func updateOrder(db *gorm.DB, order *Order) error {
 	// todo: 2024/7/10|sean|implement update order
 	panic("implement me")
 }
+
+func deleteOrder(db *gorm.DB, orderID int64) error {
+	// todo: 2024/7/10|sean|implement delete order
+	panic("implement me")
+}
