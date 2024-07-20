@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "shortener_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/blackhorseya/golang-101/shortener",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "shortener",
+    embed = [":shortener_lib"],
+    visibility = ["//visibility:public"],
+)
