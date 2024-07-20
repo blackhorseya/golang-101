@@ -5,6 +5,7 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/blackhorseya/golang-101/shortener",
     visibility = ["//visibility:private"],
+    deps = ["@com_github_gin_gonic_gin//:gin"],
 )
 
 go_binary(
