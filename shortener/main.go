@@ -23,6 +23,7 @@ func main() {
 
 	router := gin.Default()
 	router.POST("/shorten", shorten)
+	router.GET("/s/:id", resolve)
 
 	err = router.Run(":8080")
 	if err != nil {
@@ -53,4 +54,7 @@ func shorten(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"id": id})
+}
+
+func resolve(c *gin.Context) {
 }
