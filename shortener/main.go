@@ -33,7 +33,7 @@ func shorten(c *gin.Context) {
 		return
 	}
 
-	id := stringx.EncodeBase62(rand.Int())
+	id := stringx.EncodeBase62(rand.Int()) //nolint:gosec // This is just a demo.
 
 	c.JSON(http.StatusCreated, gin.H{"id": id})
 }
