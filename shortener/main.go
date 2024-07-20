@@ -1,19 +1,30 @@
 package main
 
 import (
+	"context"
 	"math/rand"
 	"net/http"
 	"time"
 
+	"github.com/blackhorseya/golang-101/pkg/storage/redix"
 	"github.com/blackhorseya/golang-101/pkg/stringx"
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 )
 
+var rdb *redis.Client
+
 func main() {
+	client, err := redix.NewClient(redix.Options{Addr: "localhost:6379"})
+	if err != nil {
+		panic(err)
+	}
+	rdb = client
+
 	router := gin.Default()
 	router.POST("/shorten", shorten)
 
-	err := router.Run(":8080")
+	err = router.Run(":8080")
 	if err != nil {
 		panic(err)
 	}
@@ -34,6 +45,12 @@ func shorten(c *gin.Context) {
 	}
 
 	id := stringx.EncodeBase62(rand.Int()) //nolint:gosec // This is just a demo.
+
+	err = rdb.Set(context.Background(), id, payload.URL, payload.Expiry).Err()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
 	c.JSON(http.StatusCreated, gin.H{"id": id})
 }

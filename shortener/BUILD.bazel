@@ -6,8 +6,10 @@ go_library(
     importpath = "github.com/blackhorseya/golang-101/shortener",
     visibility = ["//visibility:private"],
     deps = [
+        "//pkg/storage/redix",
         "//pkg/stringx",
         "@com_github_gin_gonic_gin//:gin",
+        "@com_github_redis_go_redis_v9//:go-redis",
     ],
 )
 
