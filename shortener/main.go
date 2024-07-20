@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"math/rand"
 	"net/http"
 	"time"
@@ -57,4 +58,16 @@ func shorten(c *gin.Context) {
 }
 
 func resolve(c *gin.Context) {
+	id := c.Param("id")
+
+	url, err := rdb.Get(context.Background(), id).Result()
+	if errors.Is(err, redis.Nil) {
+		c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+		return
+	} else if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.Redirect(http.StatusMovedPermanently, url)
 }
