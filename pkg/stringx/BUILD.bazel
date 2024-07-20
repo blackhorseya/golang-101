@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "stringx",
+    srcs = ["base62.go"],
+    importpath = "github.com/blackhorseya/golang-101/pkg/stringx",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "stringx_test",
+    srcs = ["base62_test.go"],
+    embed = [":stringx"],
+)

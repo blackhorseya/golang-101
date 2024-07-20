@@ -109,10 +109,10 @@
         "bzlTransitiveDigest": "3lAltYJp6u8Z4k9qI7Nn1s2S5dTYTxi80hAMysQWRJE=",
         "usagesDigest": "StKV/ipZp/3gjfUP+wcd0JP+irv+FaShpTYesDX2+jo=",
         "recordedFileInputs": {
-          "@@//go.mod": "dd2869414e489ab36744c472979b66786351d648facf7d65932ee8f4b5f53f7a",
+          "@@//go.mod": "eeee179e3c709e4fccf746093818c62e3cdd42b0be03ef4d4163c6ea6a8b67bc",
           "@@rules_go~//go.mod": "de22304b720f7f61350ec1c9739de6c0a1b1103fd22bfeb6e92c6c843ddc6d6e",
           "@@gazelle~//go.sum": "7c4460e8ecb5dd8691a51d4fa2e9e4751108b933636497ce46db499fc2e7a88d",
-          "@@//go.sum": "e9c903b3741a8538610d2f2a8150ecdd3b3fdc65b933a40111e2423bca6fcfc2",
+          "@@//go.sum": "69e91f82f9d5a4dfa0ce51a21024f3333fd24a365f7ae8de5fa22339ed23ac98",
           "@@rules_go~//go.sum": "d56fdb19b21a5f12bcf625c49432371ac39c2def0f564098fbda107f7c080f40",
           "@@gazelle~//go.mod": "48dc6e771c3028ee1c18b9ffc81e596fd5f6d7e0016c5ef280e30f2821f60473"
         },
@@ -823,9 +823,9 @@
               "build_extra_args": [],
               "patches": [],
               "patch_args": [],
-              "sum": "h1:KH3VH9y/MgNQg1dE7b3XfVK0GsPSIzJwdF617gUSbvY=",
+              "sum": "h1:LKtvyfbX3UGVPFcGqJ9ItpVWW6oN/2XqTxfAnwRRXiA=",
               "replace": "",
-              "version": "v1.64.0"
+              "version": "v1.64.1"
             }
           },
           "com_github_bytedance_sonic": {
