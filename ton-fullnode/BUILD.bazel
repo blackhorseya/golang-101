@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "ton-fullnode_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/blackhorseya/golang-101/ton-fullnode",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "ton-fullnode",
+    embed = [":ton-fullnode_lib"],
+    visibility = ["//visibility:public"],
+)
