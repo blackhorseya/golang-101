@@ -5,6 +5,10 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/blackhorseya/golang-101/ton-fullnode",
     visibility = ["//visibility:private"],
+    deps = [
+        "@com_github_xssnick_tonutils_go//liteclient",
+        "@com_github_xssnick_tonutils_go//ton",
+    ],
 )
 
 go_binary(
