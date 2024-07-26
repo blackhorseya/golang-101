@@ -109,10 +109,10 @@
         "bzlTransitiveDigest": "3lAltYJp6u8Z4k9qI7Nn1s2S5dTYTxi80hAMysQWRJE=",
         "usagesDigest": "StKV/ipZp/3gjfUP+wcd0JP+irv+FaShpTYesDX2+jo=",
         "recordedFileInputs": {
-          "@@//go.mod": "aa262b8548c86a751932d62926160242cebc69dd783522f36a6f4ee6482c1581",
+          "@@//go.mod": "438232d5aad9ddc815afc34a68d8bcdf380e396f9ec901bd88220ed9d308e0ac",
           "@@rules_go~//go.mod": "de22304b720f7f61350ec1c9739de6c0a1b1103fd22bfeb6e92c6c843ddc6d6e",
           "@@gazelle~//go.sum": "7c4460e8ecb5dd8691a51d4fa2e9e4751108b933636497ce46db499fc2e7a88d",
-          "@@//go.sum": "be5b02f72e2999ba1089e6103bf9f9041ab45ea4d9c3129cff7172b677c33481",
+          "@@//go.sum": "569cdd03ddbe074f392903c9b48d4633393eaf54b99406bd47f978c9179f00bf",
           "@@rules_go~//go.sum": "d56fdb19b21a5f12bcf625c49432371ac39c2def0f564098fbda107f7c080f40",
           "@@gazelle~//go.mod": "48dc6e771c3028ee1c18b9ffc81e596fd5f6d7e0016c5ef280e30f2821f60473"
         },
@@ -449,6 +449,21 @@
               "version": "v1.34.1"
             }
           },
+          "com_github_oasisprotocol_curve25519_voi": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "github.com/oasisprotocol/curve25519-voi",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:7smdlrfdcZic4VfsGKD2ulWL804a4GVphr4s7WZxGiY=",
+              "replace": "",
+              "version": "v0.0.0-20220328075252-7dd334e3daae"
+            }
+          },
           "org_golang_x_mod": {
             "bzlFile": "@@gazelle~//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
@@ -599,6 +614,21 @@
               "version": "v1.1.5"
             }
           },
+          "com_github_sigurn_crc16": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "github.com/sigurn/crc16",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:aQKxg3+2p+IFXXg97McgDGT5zcMrQoi0EICZs8Pgchs=",
+              "replace": "",
+              "version": "v0.0.0-20211026045750-20ab5afb07e3"
+            }
+          },
           "io_opentelemetry_go_otel_sdk": {
             "bzlFile": "@@gazelle~//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
@@ -627,6 +657,21 @@
               "sum": "h1:EWaQ/wswjilfKLTECiXz7Rh+3BjFhfDFKv/oXslEjJA=",
               "replace": "",
               "version": "v0.14.1"
+            }
+          },
+          "com_github_xssnick_tonutils_go": {
+            "bzlFile": "@@gazelle~//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "importpath": "github.com/xssnick/tonutils-go",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:J0hVJI4LNEFHqgRHzpWTjFuv/Ga89OqLRUc9gxmjCoc=",
+              "replace": "",
+              "version": "v1.9.9"
             }
           },
           "io_opentelemetry_go_otel_exporters_stdout_stdouttrace": {
@@ -1105,6 +1150,7 @@
               "importpaths": {
                 "com_github_gin_gonic_gin": "github.com/gin-gonic/gin",
                 "com_github_redis_go_redis_v9": "github.com/redis/go-redis/v9",
+                "com_github_xssnick_tonutils_go": "github.com/xssnick/tonutils-go",
                 "io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin": "go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin",
                 "io_opentelemetry_go_contrib_instrumentation_net_http_otelhttp": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
                 "io_opentelemetry_go_otel": "go.opentelemetry.io/otel",
@@ -1145,7 +1191,9 @@
                 "com_github_mattn_go_isatty": "github.com/mattn/go-isatty",
                 "com_github_modern_go_concurrent": "github.com/modern-go/concurrent",
                 "com_github_modern_go_reflect2": "github.com/modern-go/reflect2",
+                "com_github_oasisprotocol_curve25519_voi": "github.com/oasisprotocol/curve25519-voi",
                 "com_github_pelletier_go_toml_v2": "github.com/pelletier/go-toml/v2",
+                "com_github_sigurn_crc16": "github.com/sigurn/crc16",
                 "com_github_twitchyliquid64_golang_asm": "github.com/twitchyliquid64/golang-asm",
                 "com_github_ugorji_go_codec": "github.com/ugorji/go/codec",
                 "io_opentelemetry_go_otel_exporters_otlp_otlptrace": "go.opentelemetry.io/otel/exporters/otlp/otlptrace",
@@ -1263,6 +1311,7 @@
           "explicitRootModuleDirectDeps": [
             "com_github_gin_gonic_gin",
             "com_github_redis_go_redis_v9",
+            "com_github_xssnick_tonutils_go",
             "io_opentelemetry_go_contrib_instrumentation_github_com_gin_gonic_gin_otelgin",
             "io_opentelemetry_go_contrib_instrumentation_net_http_otelhttp",
             "io_opentelemetry_go_otel",
