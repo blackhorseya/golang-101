@@ -1,20 +1,17 @@
-load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
-    name = "simple-grpc",
+    name = "simple-grpc_lib",
     srcs = [
-        "user.pb.go",
-        "user_grpc.pb.go",
-        "user_grpc_mock.pb.go",
+        "client.go",
+        "server.go",
     ],
     importpath = "github.com/blackhorseya/golang-101/simple-grpc",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "simple-grpc",
+    embed = [":simple-grpc_lib"],
     visibility = ["//visibility:public"],
-    deps = [
-        "@org_golang_google_grpc//:grpc",
-        "@org_golang_google_grpc//codes",
-        "@org_golang_google_grpc//status",
-        "@org_golang_google_protobuf//reflect/protoreflect",
-        "@org_golang_google_protobuf//runtime/protoimpl",
-        "@org_uber_go_mock//gomock",
-    ],
 )
