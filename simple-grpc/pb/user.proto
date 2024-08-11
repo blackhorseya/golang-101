@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package example;
 
-option go_package = "github.com/blackhorseya/golang-101/simple-grpc";
+option go_package = "github.com/blackhorseya/golang-101/simple-grpc/pb";
 
 message User {
   string id = 1;
