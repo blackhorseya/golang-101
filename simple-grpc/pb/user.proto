@@ -12,7 +12,6 @@ message User {
 
 service UserService {
   rpc GetUser(UserIdRequest) returns (User);
-  rpc CreateUser(User) returns (User);
 }
 
 message UserIdRequest {

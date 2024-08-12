@@ -5,6 +5,11 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/blackhorseya/golang-101/simple-grpc/client",
     visibility = ["//visibility:private"],
+    deps = [
+        "//simple-grpc/pb",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//credentials/insecure",
+    ],
 )
 
 go_binary(

@@ -16,13 +16,10 @@ type userService struct {
 }
 
 func (x *userService) GetUser(ctx context.Context, request *pb.UserIdRequest) (*pb.User, error) {
-	// TODO: 2024/8/11|sean|implement me
-	panic("implement me")
-}
-
-func (x *userService) CreateUser(ctx context.Context, user *pb.User) (*pb.User, error) {
-	// TODO: 2024/8/11|sean|implement me
-	panic("implement me")
+	return &pb.User{
+		Id:   request.Id,
+		Name: "Sean",
+	}, nil
 }
 
 func main() {
