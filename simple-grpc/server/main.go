@@ -8,6 +8,9 @@ import (
 
 	"github.com/blackhorseya/golang-101/simple-grpc/pb"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	"google.golang.org/grpc/health/grpc_health_v1"
+	"google.golang.org/grpc/reflection"
 )
 
 var _ pb.UserServiceServer = (*userService)(nil)
@@ -32,6 +35,14 @@ func main() {
 
 	grpcserver := grpc.NewServer()
 	pb.RegisterUserServiceServer(grpcserver, &userService{})
+
+	// register health service
+	healthServer := health.NewServer()
+	grpc_health_v1.RegisterHealthServer(grpcserver, healthServer)
+	healthServer.SetServingStatus("example", grpc_health_v1.HealthCheckResponse_SERVING)
+
+	// register reflection service on gRPC server
+	reflection.Register(grpcserver)
 
 	err = grpcserver.Serve(listen)
 	if err != nil {
