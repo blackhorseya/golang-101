@@ -34,6 +34,8 @@ func main() {
 	}
 
 	grpcserver := grpc.NewServer()
+
+	// register user service
 	pb.RegisterUserServiceServer(grpcserver, &userService{})
 
 	// register health service
