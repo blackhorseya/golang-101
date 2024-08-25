@@ -1,0 +1,12 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "pbconnect",
+    srcs = ["user.connect.go"],
+    importpath = "github.com/blackhorseya/golang-101/simple-grpc/pb/pbconnect",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//simple-grpc/pb",
+        "@com_connectrpc_connect//:connect",
+    ],
+)
