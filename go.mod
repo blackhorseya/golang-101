@@ -3,6 +3,7 @@ module github.com/blackhorseya/golang-101
 go 1.22.1
 
 require (
+	connectrpc.com/connect v1.16.2
 	github.com/gin-gonic/gin v1.10.0
 	github.com/redis/go-redis/v9 v9.6.0
 	github.com/xssnick/tonutils-go v1.9.9
@@ -16,7 +17,6 @@ require (
 	go.opentelemetry.io/otel/sdk v1.27.0
 	go.opentelemetry.io/otel/sdk/metric v1.27.0
 	go.opentelemetry.io/otel/trace v1.27.0
-	go.uber.org/mock v0.4.0
 	google.golang.org/grpc v1.64.1
 	google.golang.org/protobuf v1.34.1
 	gorm.io/driver/mysql v1.5.7
