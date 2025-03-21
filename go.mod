@@ -1,12 +1,12 @@
 module github.com/blackhorseya/golang-101
 
 go 1.22.1
-toolchain go1.23.7
+toolchain go1.24.1
 
 require (
 	connectrpc.com/connect v1.16.2
 	github.com/gin-gonic/gin v1.10.0
-	github.com/redis/go-redis/v9 v9.6.0
+	github.com/redis/go-redis/v9 v9.6.3
 	github.com/xssnick/tonutils-go v1.9.9
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.52.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.52.0
